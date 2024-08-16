@@ -19,7 +19,7 @@ const CoupleSection2 = (props) => {
                   </div>
                 </div>
                 <div className="couple-text">
-                  <h3>Domain Yakout</h3>
+                  <h3>Domaine Yakout</h3>
                   <p>
                     Nous sommes très heureux de vous accueillir au Domaine
                     Yakout pour célébrer notre mariage. C'est un endroit qui
