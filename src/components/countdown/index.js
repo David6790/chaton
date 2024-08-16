@@ -13,6 +13,7 @@ const TimeCountDown = (props) => {
   useEffect(() => {
     setInterval(() => setNewTime(), 1000);
     return () => clearInterval();
+    // eslint-disable-next-line
   }, []);
 
   const setNewTime = () => {

@@ -4,6 +4,7 @@ const RSVPForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [guest, setGuest] = useState("");
+  // eslint-disable-next-line
   const [brunch, setBrunch] = useState(null); // Modification: brunch est maintenant un booléen
   const [arrival, setArrival] = useState("");
   const [isAttending, setIsAttending] = useState(null);

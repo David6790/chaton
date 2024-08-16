@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import coupleImg1 from "../../images/couple/1.jpg";
-import coupleImg2 from "../../images/couple/2.jpg";
+
 import bg from "../../images/couple/image-bg.svg";
 
 const CoupleSection2 = (props) => {

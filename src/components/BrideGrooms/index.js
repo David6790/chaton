@@ -4,7 +4,6 @@ import SectionTitle from "../SectionTitle";
 import timg1 from "../../images/team/provi.jpeg";
 import timg2 from "../../images/team/ophe.jpeg";
 import timg3 from "../../images/team/thimo.jpg";
-import timg4 from "../../images/team/img-4.jpg";
 
 const Brides = [
   {
