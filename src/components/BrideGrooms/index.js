@@ -10,7 +10,7 @@ const Brides = [
     id: "1",
     tImg: timg1,
     name: "Clara Hehn",
-    title: "Témoin",
+    title: "clara@exemple.com",
     animation: "1000",
     viewBox: "0 0 265 236",
     svgPath:
@@ -20,7 +20,7 @@ const Brides = [
     id: "2",
     tImg: timg2,
     name: "Ophélie Long",
-    title: "Témoin",
+    title: "herber.ophelie@yahoo.com",
     animation: "1200",
     viewBox: "0 0 261 241",
     svgPath:
@@ -30,7 +30,7 @@ const Brides = [
     id: "3",
     tImg: timg3,
     name: "Thimothée Parratte ",
-    title: "Témoin",
+    title: "tim@exemple.com",
     animation: "1400",
     viewBox: "0 0 246 254",
     svgPath:
@@ -42,7 +42,10 @@ const BrideGrooms = (props) => {
   return (
     <section className={`wpo-team-section section-padding ${props.brClass}`}>
       <div className="container">
-        <SectionTitle subTitle={"La Régie "} MainTitle={"Les Témoins"} />
+        <SectionTitle
+          subTitle={"Des questions ? Vous pouvez contacter: "}
+          MainTitle={"Nos Témoins"}
+        />
         <div className="wpo-team-wrap scene-2" id="scene-2">
           <div className="row">
             {Brides.slice(0, 3).map((Bride, tm) => (
