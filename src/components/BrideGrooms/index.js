@@ -1,8 +1,8 @@
 import React from "react";
 import { Slide } from "react-awesome-reveal";
 import SectionTitle from "../SectionTitle";
-import timg1 from "../../images/team/provi.jpeg";
-import timg2 from "../../images/team/ophe.jpeg";
+import timg1 from "../../images/team/clara1.jpg";
+import timg2 from "../../images/team/ophe2.jpg";
 import timg3 from "../../images/team/thimo.jpg";
 
 const Brides = [
@@ -10,7 +10,7 @@ const Brides = [
     id: "1",
     tImg: timg1,
     name: "Clara Hehn",
-    title: "clara@exemple.com",
+    title: "clara.hehn@gmail.com",
     animation: "1000",
     viewBox: "0 0 265 236",
     svgPath:
@@ -30,7 +30,7 @@ const Brides = [
     id: "3",
     tImg: timg3,
     name: "Thimothée Parratte ",
-    title: "tim@exemple.com",
+    title: "tparratte@gmail.com",
     animation: "1400",
     viewBox: "0 0 246 254",
     svgPath:

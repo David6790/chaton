@@ -2,7 +2,7 @@ import React from "react";
 const { useState, useEffect } = React;
 
 const TimeCountDown = (props) => {
-  const [countdownDate] = useState(new Date("09/25/2025").getTime());
+  const [countdownDate] = useState(new Date("05/09/2025").getTime());
   const [state, setState] = useState({
     days: 0,
     hours: 0,
@@ -11,15 +11,14 @@ const TimeCountDown = (props) => {
   });
 
   useEffect(() => {
-    setInterval(() => setNewTime(), 1000);
-    return () => clearInterval();
+    const intervalId = setInterval(() => setNewTime(), 1000);
+    return () => clearInterval(intervalId);
     // eslint-disable-next-line
   }, []);
 
   const setNewTime = () => {
     if (countdownDate) {
       const currentTime = new Date().getTime();
-
       const distanceToDate = countdownDate - currentTime;
 
       let days = Math.floor(distanceToDate / (1000 * 60 * 60 * 24));
@@ -31,18 +30,13 @@ const TimeCountDown = (props) => {
       );
       let seconds = Math.floor((distanceToDate % (1000 * 60)) / 1000);
 
-      const numbersToAddZeroTo = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+      // Ajout de zéro si nécessaire
       days = `${days}`;
-      if (numbersToAddZeroTo.includes(hours)) {
-        hours = `0${hours}`;
-      } else if (numbersToAddZeroTo.includes(minutes)) {
-        minutes = `0${minutes}`;
-      } else if (numbersToAddZeroTo.includes(seconds)) {
-        seconds = `0${seconds}`;
-      }
+      hours = hours < 10 ? `0${hours}` : hours;
+      minutes = minutes < 10 ? `0${minutes}` : minutes;
+      seconds = seconds < 10 ? `0${seconds}` : seconds;
 
-      setState({ days: days, hours: hours, minutes, seconds });
+      setState({ days, hours, minutes, seconds });
     }
   };
 

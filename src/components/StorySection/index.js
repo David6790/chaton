@@ -21,11 +21,13 @@ const Storys = [
     sImg: sImg4,
     flower: flowerShape2,
     title: "Villa Yakout",
-    date: <span style={{ fontSize: "28px" }}>La Villa</span>,
+    date: (
+      <span style={{ fontSize: window.innerWidth < 576 ? "14px" : "28px" }}>
+        La Villa
+      </span>
+    ),
     description: `
-             Il ne reste que quelques chambres disponibles à la Villa Yakout. 
-             Si vous le souhaitez vous pouvez contacter Charlotte qui vous renseignera 
-             sur les disponibilités et les tarifs.`,
+    Il ne reste que quelques chambres disponibles au Domaine Yakout. Si vous le souhaitez, vous pouvez contacter Charlotte ou Nicolas qui vous renseigneront sur les disponibilités et les tarifs. `,
     link: {
       url: "mailto:charlotte.ec.jung@gmail.com?subject=Demande%20de%20réservation%20Villa%20Yakout",
       text: "Contacter Charlotte pour plus d'informations", // Texte du lien
@@ -37,20 +39,31 @@ const Storys = [
     sImg: sImg1,
     flower: flowerShape,
     title: "Se Loger",
-    date: <span style={{ fontSize: "28px" }}>AirBnB</span>,
+    date: (
+      <span style={{ fontSize: window.innerWidth < 576 ? "14px" : "28px" }}>
+        AirBnB
+      </span>
+    ),
     description: `
-    Les alentours du Domaine Yakout regorgent de charmantes petites locations.
-    Nous avons pris le soin de sélectionner quelques pépites qui ne manqueront pas de vous séduire.`,
+    Les alentours du Domaine Yakout regorgent de charmantes petites locations. Nous avons pris le soin de sélectionner quelques pépites qui ne manqueront pas de vous séduire. Certaines pourrons être partagées à plusieurs ! Vous pourrez aussi décider de loger dans la Médina qui se situe à une quinzaine de minutes du Domaine. `,
     link: {
-      url: "https://www.airbnb.com", // Lien vers Airbnb ou autre
+      url: "https://www.airbnb.fr/wishlists/v/1583251594?viralityEntryPoint=49&s=76", // Lien vers Airbnb
       text: "Explorer la sélection sur Airbnb", // Texte du lien
+    },
+    additionalLink: {
+      url: "https://booking.com/mywishlist.html?wl=EYyS9flwAQhrr0g7Ie8VLhQY74Y", // Lien vers Booking.com
+      text: "Voir les options sur Booking.com", // Texte du lien supplémentaire
     },
   },
   {
     sImg: sImg2,
     flower: flowerShape2,
     title: "Attention passport",
-    date: <span style={{ fontSize: "28px" }}>Voyage</span>,
+    date: (
+      <span style={{ fontSize: window.innerWidth < 576 ? "14px" : "28px" }}>
+        Voyage
+      </span>
+    ),
     description: `
           Attention, pour les voyages à Marrakech, votre passeport doit avoir une validité de plus de 6 mois.
           Vérifiez les détails pour vous assurer que vos documents sont en règle.`,
@@ -65,7 +78,11 @@ const Storys = [
     sImg: sImg3,
     flower: flowerShape,
     title: "Visiter Marakech",
-    date: <span style={{ fontSize: "28px" }}>Toursime</span>,
+    date: (
+      <span style={{ fontSize: window.innerWidth < 576 ? "14px" : "28px" }}>
+        Toursime
+      </span>
+    ),
     description: `
       N'hésitez pas à faire un petit tour dans le coin, Marrakech est une très belle ville.
       Découvrez toutes les merveilles qu'elle a à offrir en visitant l'office de tourisme.`,
@@ -87,10 +104,21 @@ const StorySection = (props) => {
         <div className="wpo-story-wrap">
           {Storys.map((story, st) => (
             <div className="wpo-story-item" key={st}>
-              <div className="row">
+              <div
+                className="row"
+                style={{ display: "flex", alignItems: "stretch" }}
+              >
                 <div className={`col col-lg-6 col-12 ${story.order1}`}>
-                  <div className="wpo-story-img">
-                    <img src={story.sImg} alt="" />
+                  <div className="wpo-story-img" style={{ height: "100%" }}>
+                    <img
+                      src={story.sImg}
+                      alt=""
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
                   </div>
                 </div>
                 <div className={`col col-lg-6 col-12 ${story.order2}`}>
@@ -111,10 +139,27 @@ const StorySection = (props) => {
                         style={{
                           color: "#808000",
                           textDecoration: "underline",
-                        }} // Utilisation du vert olive
+                          display: "block", // Pour que le lien soit sur une nouvelle ligne
+                          marginBottom: "10px", // Espace entre les liens
+                        }}
                       >
                         {story.link.text}
                       </a>
+                      {story.additionalLink && (
+                        <a
+                          href={story.additionalLink.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            color: "#808000",
+                            textDecoration: "underline",
+                            display: "block", // Pour que le lien soit sur une nouvelle ligne
+                            marginBottom: "10px",
+                          }}
+                        >
+                          {story.additionalLink.text}
+                        </a>
+                      )}
                       <div className="flower">
                         <img src={story.flower} alt="" />
                       </div>
