@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios"; // Importation de axios
+import emailjs from "@emailjs/browser";
 
 const RSVPForm = () => {
   const [name, setName] = useState("");
@@ -11,15 +12,43 @@ const RSVPForm = () => {
   const [hasAllergies, setHasAllergies] = useState(null);
   const [allergyDetails, setAllergyDetails] = useState("");
 
+  const sendEmailConfirmation = (formData) => {
+    const emailParams = {
+      to_name: formData.Nom,
+      to_email: formData.Email,
+      nombre_personnes: formData.NombreDePersonnes,
+      date_arrivee: formData["Date-arrivee"],
+      present_brunch: formData.PresentBrunch,
+      allergies: formData.AllergieIntolerance,
+      rsvp: formData.RSVP,
+    };
+
+    // Envoi de l'email avec EmailJS
+    emailjs
+      .send(
+        "service_6j5qs7e",
+        "template_jlbbq7n",
+        emailParams,
+        "TlcoR3tgd_o9uLj7o"
+      )
+      .then((response) => {
+        console.log("Email envoyé avec succès", response.status, response.text);
+        alert("Un email de confirmation vous a été envoyé.");
+      })
+      .catch((error) => {
+        console.error("Erreur lors de l'envoi de l'email", error);
+        alert("Erreur lors de l'envoi de l'email.");
+      });
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    // Préparation des données du formulaire pour l'envoi
     const formData = {
       Nom: name,
       NombreDePersonnes: guest,
       Email: email,
-      RSVP: isAttending === true ? "Oui" : isAttending === false ? "Non" : "", // Corrige ici pour envoyer "Oui" ou "Non"
+      RSVP: isAttending === true ? "Oui" : isAttending === false ? "Non" : "",
       "Date-arrivee": arrival,
       "Presence-bebe": "",
       AllergieIntolerance: hasAllergies ? allergyDetails : "Non",
@@ -35,6 +64,9 @@ const RSVPForm = () => {
       );
       console.log(response.data);
       alert("Données envoyées avec succès !");
+
+      // Envoi de l'email de confirmation après la mise à jour de SheetDB
+      sendEmailConfirmation(formData);
     } catch (error) {
       console.error("Erreur lors de l'envoi des données", error);
     }
@@ -144,8 +176,10 @@ const RSVPForm = () => {
                   onChange={(e) => setArrival(e.target.value)}
                 >
                   <option value="">Le jour de votre arrivée</option>
-                  <option value="Jeudi">Jeudi 08/05 - Dîner de bienvenu</option>
-                  <option value="Vendredi">
+                  <option value="Jeudi - Dîner de bienvenu">
+                    Jeudi 08/05 - Dîner de bienvenu
+                  </option>
+                  <option value="Vendredi - La cérémonie">
                     Vendredi 09/05 - La Cérémonie
                   </option>
                 </select>
