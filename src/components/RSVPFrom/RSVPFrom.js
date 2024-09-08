@@ -1,23 +1,45 @@
 import React, { useState } from "react";
+import axios from "axios"; // Importation de axios
 
 const RSVPForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [guest, setGuest] = useState("");
-  // eslint-disable-next-line
-  const [brunch, setBrunch] = useState(null); // Modification: brunch est maintenant un booléen
+  const [brunch, setBrunch] = useState(null);
   const [arrival, setArrival] = useState("");
   const [isAttending, setIsAttending] = useState(null);
   const [hasAllergies, setHasAllergies] = useState(null);
   const [allergyDetails, setAllergyDetails] = useState("");
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    // Ici, vous pourrez ajouter la validation de vos saisies
-    // et toute autre logique de soumission du formulaire
+    // Préparation des données du formulaire pour l'envoi
+    const formData = {
+      Nom: name,
+      NombreDePersonnes: guest,
+      Email: email,
+      RSVP: isAttending === true ? "Oui" : isAttending === false ? "Non" : "", // Corrige ici pour envoyer "Oui" ou "Non"
+      "Date-arrivee": arrival,
+      "Presence-bebe": "",
+      AllergieIntolerance: hasAllergies ? allergyDetails : "Non",
+      PresentBrunch: brunch ? "Oui" : "Non",
+    };
 
-    // Réinitialiser les champs après soumission
+    // Envoi des données à SheetDB via une requête POST
+    try {
+      console.log(formData);
+      const response = await axios.post(
+        "https://sheetdb.io/api/v1/trawv5ym4i8ob", // Remplace par ton identifiant SheetDB
+        formData
+      );
+      console.log(response.data);
+      alert("Données envoyées avec succès !");
+    } catch (error) {
+      console.error("Erreur lors de l'envoi des données", error);
+    }
+
+    // Réinitialisation des champs après soumission
     setName("");
     setEmail("");
     setGuest("");
@@ -122,8 +144,10 @@ const RSVPForm = () => {
                   onChange={(e) => setArrival(e.target.value)}
                 >
                   <option value="">Le jour de votre arrivée</option>
-                  <option value="08/05">Jeudi 08/05 - Dîner de bienvenu</option>
-                  <option value="09/05">Vendredi 09/05 - La Cérémonie</option>
+                  <option value="Jeudi">Jeudi 08/05 - Dîner de bienvenu</option>
+                  <option value="Vendredi">
+                    Vendredi 09/05 - La Cérémonie
+                  </option>
                 </select>
               </div>
               <p style={{ marginTop: "5px", fontSize: "14px", color: "#555" }}>
