@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"; // Importation de axios
+import axios from "axios";
 import emailjs from "@emailjs/browser";
 
 const RSVPForm = () => {
@@ -11,6 +11,8 @@ const RSVPForm = () => {
   const [isAttending, setIsAttending] = useState(null);
   const [hasAllergies, setHasAllergies] = useState(null);
   const [allergyDetails, setAllergyDetails] = useState("");
+
+  const [errorMessage, setErrorMessage] = useState("");
 
   const sendEmailConfirmation = (formData) => {
     const emailParams = {
@@ -41,8 +43,45 @@ const RSVPForm = () => {
       });
   };
 
+  const validateForm = () => {
+    // Validation des champs obligatoires
+    if (!name || !email || !guest) {
+      setErrorMessage("Nom, nombre de personnes et email sont obligatoires.");
+      return false;
+    }
+
+    // Validation des champs liés à la présence
+    if (isAttending === true) {
+      if (!arrival) {
+        setErrorMessage(
+          "Le jour d'arrivée est obligatoire si vous assistez à l'événement."
+        );
+        return false;
+      }
+      if (brunch === null) {
+        setErrorMessage("Vous devez indiquer si vous serez présent au brunch.");
+        return false;
+      }
+    }
+
+    // Validation des allergies
+    if (hasAllergies === true && !allergyDetails) {
+      setErrorMessage("Veuillez spécifier les détails de votre allergie.");
+      return false;
+    }
+
+    // Réinitialiser le message d'erreur si tout est correct
+    setErrorMessage("");
+    return true;
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    // Si la validation échoue, on arrête le processus
+    if (!validateForm()) {
+      return;
+    }
 
     const formData = {
       Nom: name,
@@ -50,12 +89,11 @@ const RSVPForm = () => {
       Email: email,
       RSVP: isAttending === true ? "Oui" : isAttending === false ? "Non" : "",
       "Date-arrivee": arrival,
-      "Presence-bebe": "",
       AllergieIntolerance: hasAllergies ? allergyDetails : "Non",
       PresentBrunch: brunch ? "Oui" : "Non",
     };
 
-    // Envoi des données à SheetDB via une requête POST
+    // Envoi des données via axios
     try {
       console.log(formData);
       const response = await axios.post(
@@ -71,7 +109,7 @@ const RSVPForm = () => {
       console.error("Erreur lors de l'envoi des données", error);
     }
 
-    // Réinitialisation des champs après soumission
+    // Réinitialiser les champs après soumission
     setName("");
     setEmail("");
     setGuest("");
@@ -85,6 +123,13 @@ const RSVPForm = () => {
   return (
     <form onSubmit={submitHandler} className="contact-validation-active">
       <div className="row">
+        {/* Affichage du message d'erreur */}
+        {errorMessage && (
+          <div className="col col-lg-12 col-12">
+            <p style={{ color: "red" }}>{errorMessage}</p>
+          </div>
+        )}
+
         <div className="col col-lg-12 col-12">
           <div className="form-field">
             <input
@@ -94,6 +139,7 @@ const RSVPForm = () => {
               onChange={(e) => setName(e.target.value)}
               className="form-control"
               placeholder="Nom de la famille"
+              required
             />
           </div>
         </div>
@@ -105,6 +151,7 @@ const RSVPForm = () => {
               className="form-control"
               name="guest"
               onChange={(e) => setGuest(e.target.value)}
+              required
             >
               <option value="">Nombre de personne</option>
               <option value="01">01</option>
@@ -126,6 +173,7 @@ const RSVPForm = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
               placeholder="Votre Email"
+              required
             />
           </div>
         </div>
@@ -174,6 +222,7 @@ const RSVPForm = () => {
                   className="form-control"
                   name="arrival"
                   onChange={(e) => setArrival(e.target.value)}
+                  required={isAttending === true}
                 >
                   <option value="">Le jour de votre arrivée</option>
                   <option value="Jeudi - Dîner de bienvenu">
@@ -248,6 +297,7 @@ const RSVPForm = () => {
                     onChange={(e) => setAllergyDetails(e.target.value)}
                     className="form-control"
                     placeholder="Intolérances ou allergies"
+                    required={hasAllergies === true}
                   />
                 </div>
               </div>
@@ -272,6 +322,7 @@ const RSVPForm = () => {
                     name="brunch"
                     value="yes"
                     onChange={() => setBrunch(true)}
+                    required={isAttending === true}
                   />
                   <label htmlFor="brunch-yes">Oui</label>
                 </p>
@@ -282,6 +333,7 @@ const RSVPForm = () => {
                     name="brunch"
                     value="no"
                     onChange={() => setBrunch(false)}
+                    required={isAttending === true}
                   />
                   <label htmlFor="brunch-no">Non</label>
                 </p>
