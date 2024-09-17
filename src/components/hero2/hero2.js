@@ -58,7 +58,7 @@ const Hero2 = () => {
       <div className="static-hero-right">
         <div className="static-hero-img scene" id="scene">
           <div className="static-hero-img-inner">
-            <img src="./img/hero.jpg" alt="" />
+            <img src="./img/chat.jpg" alt="" />
           </div>
           <div className="static-hero-shape-1">
             <span className="layer" data-depth="0.25">
