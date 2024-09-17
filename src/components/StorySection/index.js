@@ -45,7 +45,9 @@ const Storys = [
       </span>
     ),
     description: `
-    Les alentours du Domaine Yakout regorgent de charmantes petites locations. Nous avons pris le soin de sélectionner quelques pépites qui ne manqueront pas de vous séduire. Certaines pourrons être partagées à plusieurs ! Vous pourrez aussi décider de loger dans la Médina qui se situe à une quinzaine de minutes du Domaine. `,
+    Les alentours du Domaine Yakout regorgent de charmantes petites locations. Nous avons pris le soin de sélectionner quelques pépites qui ne manqueront pas de vous séduire. Certaines pourrons être partagées à plusieurs ! Vous pourrez aussi décider de loger dans la Médina qui se situe à une quinzaine de minutes du Domaine.
+    
+    Pour être juste à côté, privilégiez les logements de la Ferme de coco ( a partager à plusieurs) , du Riad Jawad et Chez Marie. Pour les autres, nous vous conseillons de louer une voiture pour faciliter les trajets  `,
     link: {
       url: "https://www.airbnb.fr/wishlists/v/1583251594?viralityEntryPoint=49&s=76", // Lien vers Airbnb
       text: "Explorer la sélection sur Airbnb", // Texte du lien
@@ -131,7 +133,9 @@ const StorySection = (props) => {
                         </div>
                       </div>
                       <h2>{story.title}</h2>
-                      <p>{story.description}</p>
+                      <p style={{ whiteSpace: "pre-line" }}>
+                        {story.description}
+                      </p>
                       <a
                         href={story.link.url}
                         target="_blank"
