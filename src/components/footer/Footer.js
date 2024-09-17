@@ -21,14 +21,14 @@ const Footer = (props) => {
                   <p>Site réalisé par David Long Bin</p>
                   <p>Développeur FullStack : C# / ASP.Net / React / NodeJs</p>
                   <a
-                    href="https://david-longbin.dev/"
+                    href="https://www.linkedin.com/in/david-long-bin-a27455294/"
                     style={{
                       textDecoration: "underline",
                       color: "#fff", // Couleur blanche pour correspondre aux autres textes
                       fontSize: "16px", // Taille de police correspondante
                     }}
                   >
-                    Mon Portfolio
+                    Mon Linkedin
                   </a>
                 </div>
                 <div className="link-wrap"></div>
